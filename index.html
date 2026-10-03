@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question for You ❤️</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      touch-action: manipulation;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      /* Switzerland Landscape Background */
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                  url('https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?q=80&w=1000&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Card Box */
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 35px 25px;
+      border-radius: 24px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+      max-width: 90%;
+      width: 400px;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 {
+      color: #d32f2f;
+      font-size: 1.7rem;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 120px;
+      width: 100%;
+    }
+
+    button {
+      padding: 14px 24px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    #yesBtn {
+      background-color: #4caf50;
+      color: white;
+      z-index: 100;
+    }
+
+    #noBtn {
+      background-color: #f44336;
+      color: white;
+      position: relative;
+    }
+
+    /* Love Letter Modal Popup */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .letter-card {
+      background: #fff5f6;
+      border: 2px solid #ff80ab;
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 450px;
+      width: 100%;
+      box-shadow: 0 15px 30px rgba(233, 30, 99, 0.4);
+      animation: popUp 0.5s ease;
+      text-align: left;
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .letter-title {
+      color: #e91e63;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .letter-body {
+      color: #333;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .close-btn {
+      display: block;
+      margin: 20px auto 0 auto;
+      background: #e91e63;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body onclick="enableLock()">
+
+  <div class="card">
+    <h1 id="question">ငါ့ကို ချစ်လား...? 🥺</h1>
+
+    <div class="btn-container">
+      <button id="yesBtn" onclick="acceptLove(event)">ချစ်တယ် ❤️</button>
+      <button id="noBtn" onclick="moveNo(event)">မချစ်ဘူး 💔</button>
+    </div>
+  </div>
+
+  <!-- ရည်းစားစာ Pop-up Overlay -->
+  <div class="modal-overlay" id="letterModal">
+    <div class="letter-card">
+      <div class="letter-title">💌 စာလေးဖတ်ပေးပါဦး... ❤️</div>
+      <div class="letter-body">
+        မမရေ…<br><br>
+        အခုထိ မမကို မမြင်ဖူးသေးပေမယ့် နာမည်လေးသိရုံနဲ့တောင် စိတ်ဝင်စားမိနေပြီ။<br><br>
+        မမနဲ့ စကားပြောရင်း တဖြည်းဖြည်း ပိုသိချင်လာတယ်။<br><br>
+        အသက်ကလည်း သိပ်မကွာတော့ ပိုပြီး ရင်းနှီးလို့ကောင်းမယ်ထင်တယ်။<br><br>
+        အလျင်လိုမနေပါဘူး… မမနဲ့ ဖြည်းဖြည်းချင်း ရင်းနှီးသွားချင်တာပါ။<br><br>
+        မမလည်း ကျနော့ကို အခွင့်အရေးလေးနည်းနည်းလောက်ပေးပြီး စဉ်းစားပေးပါလား... 🥺❤️
+      </div>
+      <button class="close-btn" onclick="finishAll()">Screenshot ရိုက်ထားလိုက်ပြီ 📸</button>
+    </div>
+  </div>
+
+  <script>
+    let noSize = 1.0;
+    let clickCount = 0;
+    let isAccepted = false;
+
+    const noTexts = [
+      "တကယ်ပဲ မချစ်ဘူးလား... 🥺",
+      "ငါ့ရင်ထဲမှာ နင်ပဲ ရှိတာပါ... 💓",
+      "နင့်အပြုံးလေးတွေကို ငါ အရမ်းမြတ်နိုးတယ်... ✨",
+      "ငါ့ဘဝရဲ့ ပျော်ရွှင်ခြင်းက နင်ပါပဲ... 🙈",
+      "နင့်ဘေးနားမှာ အမြဲရှိပေးချင်လို့ပါ... 🌹",
+      "စဉ်းစားပါဦးနော်... မချစ်ဘူး မလုပ်ပါနဲ့ 🥺",
+      "နင်နဲ့အတူတူ ကမ္ဘာအဆုံးထိ သွားချင်တယ်... 🏔",
+      "ငါ့ရဲ့ တကယ့်အချစ်စစ်က နင်ပါပဲ... ❤️️",
+      "နောက်တစ်ခါ ပြန်စဉ်းစားပေးပါနော်... 🙈",
+      "ချစ်တယ်လို့ပဲ ပြောလိုက်ပါတော့နော်... 👉👈"
+    ];
+
+    // ၁။ Back ခလုတ်နှိပ်ရင် မထွက်သွားအောင် အထပ်ထပ် တားဆီးခြင်း
+    function preventBack() {
+      history.pushState(null, null, location.href);
+    }
+    preventBack();
+    window.onpopstate = function () {
+      preventBack();
+      if (!isAccepted) {
+        alert("ချစ်တယ် မနှိပ်မချင်း ထွက်လို့ မရဘူးနော်! 😉❤️");
+      }
+    };
+
+    // ၂။ Browser/Tab ပိတ်ရင် သတိပေးခြင်း
+    window.addEventListener("beforeunload", function (e) {
+      if (!isAccepted) {
+        e.preventDefault();
+        e.returnValue = "ချစ်တယ် မနှိပ်မချင်း ထွက်လို့ မရဘူးနော်! 😉❤️";
+        return "ချစ်တယ် မနှိပ်မချင်း ထွက်လို့ မရဘူးနော်! 😉❤️";
+      }
+    });
+
+    // ၃။ Screen နှိပ်လိုက်တာနဲ့ Fullscreen Mode ဝင်စေခြင်း (ဖုန်းနဲ့ ကြည့်ပါက ပိုထိရောက်သည်)
+    function enableLock() {
+      if (!isAccepted && document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      }
+    }
+
+    function moveNo(event) {
+      event.stopPropagation();
+      const noBtn = document.getElementById("noBtn");
+
+      if (clickCount < noTexts.length) {
+        noBtn.innerText = noTexts[clickCount];
+      }
+
+      noSize -= 0.08;
+      if (clickCount >= noTexts.length || noSize < 0.3) {
+        noBtn.style.display = 'none';
+      } else {
+        noBtn.style.transform = `scale(${noSize})`;
+        const x = (Math.random() - 0.5) * 160;
+        const y = (Math.random() - 0.5) * 160;
+        noBtn.style.position = 'absolute';
+        noBtn.style.top = `${y}px`;
+        noBtn.style.left = `${x}px`;
+      }
+
+      clickCount++;
+    }
+
+    function acceptLove(event) {
+      event.stopPropagation();
+      isAccepted = true; // ထွက်ခွင့် ပြုလိုက်ပြီ
+      document.getElementById("letterModal").style.display = "flex";
+    }
+
+    function finishAll() {
+      // အကုန်လုံး ပိတ်ပေးလိုက်မည်
+      window.onpopstate = null;
+      document.getElementById("letterModal").style.display = "none";
+
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+
+      document.querySelector('.card').innerHTML = `
+        <h1 style="font-size: 1.8rem; color: #e91e63;">ကျေးဇူးပါနော်... ❤️</h1>
+        <p style="font-size: 1.1rem; color: #333;">"စာလေး ဖတ်ပြီးပြီ" လို့ ပြန်ပြောပေးပါဦးနော်! ✨</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
